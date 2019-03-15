@@ -2,7 +2,15 @@
 module.exports = {
     publicPath: "/",
     outputDir: "/dist",
-
+    configureWebpack: {
+        resolve: {
+            alias: {
+                'assets': '@/assets',
+                'components': '@/components',
+                'views': '@/views',
+            }
+        }
+    },
     pages: {
         index: {
             // page 的入口
@@ -60,11 +68,11 @@ module.exports = {
     },
 
     pluginOptions: {
-      i18n: {
-        locale: 'zh_CN',
-        fallbackLocale: 'zh_CN',
-        localeDir: 'locales',
-        enableInSFC: false
-      }
+        i18n: {
+            locale: 'zh_CN',
+            fallbackLocale: 'zh_CN',
+            localeDir: 'locales',
+            enableInSFC: false
+        }
     }
 }
