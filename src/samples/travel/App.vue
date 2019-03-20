@@ -1,20 +1,21 @@
 <template>
   <div id="app">
-    <a href="/"> &lt;&lt;&lt; </a>
+    <a href="/">&lt;&lt;&lt;</a>
     <DropDownList class="language" :list="list" @change="languageChange" :value="list[0]"></DropDownList>
-    <div id="nav">
-      <router-link to="/">Home</router-link>|
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+    <keep-alive>
+      <router-view v-if="show"/>
+    </keep-alive>
+    <login v-if="!show"></login>
   </div>
 </template>
 <script>
-import DropDownList from "components/DropDownList.vue";
+import DropDownList from "@/components/DropDownList.vue";
+import Login from "./pages/user/Login.vue";
 export default {
   name: "App",
   components: {
-    DropDownList
+    DropDownList,
+    Login
   },
   data() {
     return {
@@ -24,6 +25,11 @@ export default {
       ]
     };
   },
+  computed: {
+    show() {
+      return this.$store.state.login;
+    }
+  },
   methods: {
     languageChange(item) {
       this.$i18n.locale = item.locale;
@@ -32,13 +38,38 @@ export default {
 };
 </script>
 
-<style lang="stylus">
+<style lang="stylus" rel="stylesheet/stylus">
+@import '~@style/varibles.styl';
+
+.nav {
+  color: #FFF;
+  background: $them_color;
+  min-height: 0.66rem;
+  line-height: 0.66rem;
+  padding: 0.1rem;
+}
+
+.fill, .content {
+  background: $them_bg_color;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 0;
+  margin: 0;
+}
+
+.content {
+  top: 0.86rem;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+  user-select: none;
+  position: fixed;
 }
 
 .language {
@@ -48,19 +79,6 @@ export default {
 
   dt i {
     display: none;
-  }
-}
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    .router-link-exact-active {
-      color: #42b983;
-    }
   }
 }
 </style>

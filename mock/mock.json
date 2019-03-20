@@ -1,0 +1,156 @@
+{
+    "/build": {
+        "room_id": 52
+    },
+    "/entry": {
+        "user_id": "2"
+    },
+    "/info": {
+        "room_id": 1,
+        "start_time": "1540364400",
+        "end_time": "1540812578",
+        "courseware": "//courseware.uuabc.com/1V4-KB1-22-6.20712/index.html",
+        "type": 1,
+        "member_count": 3,
+        "teacher_note": "hello teacher",
+        "student_note": "hello student",
+        "users": [{
+                "user_id": 1,
+                "nickname": "amy",
+                "avatar": "234",
+                "user_type": 1,
+                "diamond": 2,
+                "entry_time": "1540364400",
+                "leave_time": "1540812578",
+                "voice_switch": 1,
+                "graffiti_switch": 1,
+                "animate_switch": 2,
+                "stage_switch": 2,
+                "point": ""
+            },
+            {
+                "user_id": 2,
+                "nickname": "lily",
+                "avatar": null,
+                "user_type": 1,
+                "diamond": 23,
+                "entry_time": "2018-10-31 14:13:10",
+                "leave_time": null,
+                "voice_switch": 1,
+                "graffiti_switch": 1,
+                "animate_switch": 2,
+                "stage_switch": 2,
+                "point": ""
+            },
+            {
+                "user_id": 3,
+                "nickname": "zeze",
+                "avatar": "234",
+                "user_type": 1,
+                "diamond": 0,
+                "entry_time": "2018-10-29 19:31:42",
+                "leave_time": null,
+                "voice_switch": 1,
+                "graffiti_switch": 1,
+                "animate_switch": 2,
+                "stage_switch": 2,
+                "point": ""
+            }
+        ]
+    },
+    "/tools": true,
+    "/chat": true,
+    "/chat_record": {
+        "list": [{
+                "user_id": 1,
+                "nickname": "amy",
+                "avatar": "234",
+                "user_type": 1,
+                "message": "hello"
+            },
+            {
+                "user_id": 1,
+                "nickname": "amy",
+                "avatar": "234",
+                "user_type": 1,
+                "message": "hello"
+            },
+            {
+                "user_id": 1,
+                "nickname": "amy",
+                "avatar": "234",
+                "user_type": 1,
+                "message": "hello"
+            },
+            {
+                "user_id": 1,
+                "nickname": "amy",
+                "avatar": "234",
+                "user_type": 1,
+                "message": "hello"
+            },
+            {
+                "user_id": 2,
+                "nickname": "lily",
+                "avatar": null,
+                "user_type": 1,
+                "message": "hello every"
+            },
+            {
+                "user_id": 2,
+                "nickname": "lily",
+                "avatar": null,
+                "user_type": 1,
+                "message": "hahah"
+            },
+            {
+                "user_id": 2,
+                "nickname": "lily",
+                "avatar": null,
+                "user_type": 1,
+                "message": "hahah"
+            }
+        ]
+    },
+    "/reward": {"list": [
+        {
+            "user_id": 1,
+            "count": 5,
+            "diamond": 56
+        },
+        {
+            "user_id": 2,
+            "count": 6,
+            "diamond": 108
+        }
+    ]},
+    "/leave": {
+        "user_id": 1
+    },
+    "/private_chat": true,
+    "/private_chat_record": {
+        "list": [{
+                "user_id": 1,
+                "user_type": 2,
+                "receive_id": 2,
+                "receive_type": 4,
+                "message": "nihao",
+                "user_nickname": "amy",
+                "user_avatar": "234",
+                "receive_nickname": "lily",
+                "receive_avatar": "http://adsf/2.jpg"
+            },
+            {
+                "user_id": 1,
+                "user_type": 4,
+                "receive_id": 2,
+                "receive_type": 2,
+                "message": "Hello",
+                "user_nickname": "Seven",
+                "user_avatar": "234",
+                "receive_nickname": "lily",
+                "receive_avatar": "http://adsf/2.jpg"
+            }
+        ]
+    }
+}

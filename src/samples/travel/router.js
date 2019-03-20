@@ -1,23 +1,49 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Home.vue'
+import Login from './pages/user/Login'
+import About from './pages/common/About'
+import NotFound from './pages/common/NotFound'
 
-Vue.use(Router)
+import Home from './pages/home/Home'
+import City from './pages/city/City'
+import Chat from './pages/chat/Chat'
+import Detail from './pages/detail/Detail'
+import Goods from './pages/goods/Goods'
+
+Vue.use(Router);
 
 export default new Router({
-  routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: Home
-    },
-    {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
-    }
-  ]
-})
+  routes: [{
+    path: '/',
+    name: 'Home',
+    component: Home
+  }, {
+    path: '/login',
+    name: 'Login',
+    component: Login
+  }, {
+    path: '/about',
+    name: 'About',
+    component: About
+  }, {
+    path: '/city',
+    name: 'City',
+    component: City
+  }, {
+    path: '/chat',
+    name: 'Chat',
+    component: Chat
+  }, {
+    path: '/detail/:id',
+    name: 'Detail',
+    component: Detail
+  }, {
+    path: '/goods/:id',
+    name: 'Goods',
+    component: Goods
+  }, {
+    path: '*',
+    name: 'NotFound',
+    component: NotFound
+  }]
+});

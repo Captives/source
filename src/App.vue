@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <a href="/"> &lt;&lt;&lt; </a>
+    <a href="/">&lt;&lt;&lt;</a>
     <DropDownList class="language" :list="list" @change="languageChange" :value="list[0]"></DropDownList>
     <div id="nav">
       <router-link to="/">Home</router-link>|
@@ -10,7 +10,7 @@
   </div>
 </template>
 <script>
-import DropDownList from "components/DropDownList.vue";
+import DropDownList from "@/components/DropDownList.vue";
 export default {
   name: "App",
   components: {
