@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="fill">
     <a href="/">&lt;&lt;&lt;</a>
     <DropDownList class="language" :list="list" @change="languageChange" :value="list[0]"></DropDownList>
     <keep-alive>

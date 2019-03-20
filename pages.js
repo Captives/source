@@ -51,7 +51,7 @@ module.exports = {
         // page 的入口
         entry: 'src/samples/travel/main.js',
         // 模板来源
-        template: 'public/index.html',
+        template: 'public/mobile.html',
         // 在 dist/index.html 的输出
         filename: 'travel.html',
         // 当使用 title 选项时，

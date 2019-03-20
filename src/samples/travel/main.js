@@ -18,11 +18,20 @@ import swiper from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
 Vue.use(swiper);
 
+
 //Socket.io消息通讯
-import VueSocketio from 'vue-socket.io'
-import socketio from 'socket.io-client'
-// Vue.use(VueSocketio, 'ws://' + window.location.hostname + ':3000');
-Vue.use(VueSocketio, socketio('ws://' + window.location.hostname + ':3000', {transports: ['websocket'], path:'/trave'}), store);
+import VueSocketIO from 'vue-socket.io';
+import SocketIO from 'socket.io-client';
+const options = { transports: ['websocket'], path: "/trave" };
+Vue.use(new VueSocketIO({
+  debug: true,
+  vuex: {
+    store,
+    // actionPrefix: 'SOCKET_',
+    // mutationPrefix: 'SOCKET_'
+  },
+  connection: SocketIO('ws://' + window.location.hostname + ':3000', options),
+}));
 
 //页面的全局组件
 import pages from './pages/index'

@@ -14,11 +14,20 @@ import pages from './web/main'
 Vue.use(pages);
 
 Vue.config.productionTip = false
-console.log("store >>>> ", store);
+
 //Socket.io消息通讯
-import VueSocketio from 'vue-socket.io'
-import socketio from 'socket.io-client'
-Vue.use(VueSocketio, socketio('ws://' + window.location.hostname + ':3000', {transports: ['websocket'], path:'/cluster'}), store);
+import VueSocketIO from 'vue-socket.io';
+import SocketIO from 'socket.io-client';
+const options = { transports: ['websocket'], path: "/cluster" };
+Vue.use(new VueSocketIO({
+  debug: true,
+  vuex: {
+    store,
+    // actionPrefix: 'SOCKET_',
+    // mutationPrefix: 'SOCKET_'
+  },
+  connection: SocketIO('ws://' + window.location.hostname + ':3000', options),
+}));
 
 new Vue({
   router,

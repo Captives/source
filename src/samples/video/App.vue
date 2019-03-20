@@ -4,7 +4,7 @@
       请先连接服务器 {{show ? 'true' : 'false'}}- {{this.$store.state.connect}}
       <DropDownList class="language" :list="list" @change="languageChange" :value="list[0]"></DropDownList>
     </span>
-    <router-view v-if="this.$store.state.connect" v-show="login" :user="user" :list="list"/>
+    <router-view v-if="this.$store.state.connect" v-show="login" :user="user" :list="roomList"/>
     <login v-if="this.$store.state.connect" v-show="!login" :error="error" @login="loginHandler"></login>
   </div>
 </template>
@@ -22,7 +22,8 @@ export default {
       list: [
         { label: "中文", locale: "zh_CN" },
         { label: "English", locale: "en_US" }
-      ]
+      ],
+      roomList: []
     };
   },
   computed: {
@@ -55,15 +56,21 @@ export default {
   },
   mounted() {
     var that = this;
-    this.$socket.on("connected", function(data) {
-      that.user = data;
-      that.login = true;
-      console.log("connected", that.user);
-    });
+    if (this.$socket) {
+      this.$socket.on("connected", function(data) {
+        that.user = data;
+        that.login = true;
+        console.log("connected", that.user);
+      });
 
-    this.$socket.on("success", function(data) {
-      that.list = data;
-    });
+      this.$socket.on("SOCKET_enterReject", function(data) {
+        console.log('enterReject', data);
+      });
+
+      this.$socket.on("success", function(data) {
+        that.roomList = data;
+      });
+    }
 
     var localData = {
       td: localStorage.getItem("td") || null,
@@ -85,12 +92,12 @@ export default {
 </script>
 
 <style lang="stylus">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+html, body, .wrapper {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  position: absolute;
 }
 
 .language {

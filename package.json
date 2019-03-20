@@ -5,7 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve --open",
     "build": "vue-cli-service build",
-    "inspect": "vue-cli-service inspect",
+    "inspect": "vue-cli-service inspect > inspect.log",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
