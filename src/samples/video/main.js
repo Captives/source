@@ -15,21 +15,15 @@ Vue.use(pages);
 
 Vue.config.productionTip = false
 
-//Socket.io消息通讯
-import VueSocketIO from 'vue-socket.io';
-import SocketIO from 'socket.io-client';
-const options = { transports: ['websocket'], path: "/cluster" };
-Vue.use(new VueSocketIO({
-  debug: true,
-  vuex: {
-    store,
-    // actionPrefix: 'SOCKET_',
-    // mutationPrefix: 'SOCKET_'
-  },
-  connection: SocketIO('ws://' + window.location.hostname + ':3000', options),
-}));
+import SocketClient from './plugin/SocketClient';
+// import SocketClient from './plugin/SocketIO';
+Vue.use(SocketClient, {
+  url: 'ws://' + window.location.hostname + ':3000',
+  transports: ['websocket'],
+  path: "/cluster"
+});
 
-new Vue({
+window.vue = new Vue({
   router,
   store,
   i18n,

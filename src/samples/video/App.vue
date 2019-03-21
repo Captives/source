@@ -19,6 +19,9 @@ export default {
   },
   data() {
     return {
+      error: "",
+      login: false,
+      user: {},
       list: [
         { label: "中文", locale: "zh_CN" },
         { label: "English", locale: "en_US" }
@@ -57,14 +60,19 @@ export default {
   mounted() {
     var that = this;
     if (this.$socket) {
+      this.$socket.on("connect", function() {
+        that.login = true;
+        console.log('socket connected');
+      });
+
       this.$socket.on("connected", function(data) {
         that.user = data;
         that.login = true;
         console.log("connected", that.user);
       });
 
-      this.$socket.on("SOCKET_enterReject", function(data) {
-        console.log('enterReject', data);
+      this.$socket.on("enterReject", function(data) {
+        console.log("enterReject", data);
       });
 
       this.$socket.on("success", function(data) {

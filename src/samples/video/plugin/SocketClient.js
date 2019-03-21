@@ -11,6 +11,8 @@ class RemoteClient extends BaseEvent {
     count = 5;
 
     constructor(options) {
+        super();
+
         if (!window.WebSocket) {
             console.warn("This browser does not support WebSocket.");
         }
@@ -98,22 +100,81 @@ class RemoteClient extends BaseEvent {
             that.emit('error');
         });
 
-        return this.socket;
+        this.attach(this.socket);
+    };
+
+    join(td, info) {
+        //join加入房间
+        this.socket.emit('join', { td: td, info: info });
     }
+
+    attach(socket) {
+        var that = this;
+        socket.on('enterSuccess', function (list) {
+            list = list || [];
+            console.log('enterSuccess', list);
+            list.forEach(function (item) {
+                that.emit('userEnter', item.user_id, item.role, item.info);
+            });
+            that.emit('enterSuccess');
+        });
+
+        socket.on('enterReject', function (data) {
+            console.warn('enterReject', data);
+            that.emit('enterReject', data.code, data.message);
+        });
+
+        socket.on('offline', function (data) {
+            console.log('offline', data);
+            that.emit('offline', data.device, data.time);
+        });
+
+        socket.on('userEnter', function (data) {
+            console.log('userEnter', data);
+            that.emit('userEnter', data.user_id, data.role, data.info);
+        });
+
+        socket.on('userQuit', function (data) {
+            console.log('userQuit', data);
+            that.emit('userQuit', data.user_id, data.role, data.info);
+        });
+
+        socket.on('share', function (data, user) {
+            data.event ? that.emit('share', data.event, data.data || {}, user) : console.log('share', data);
+        });
+    };
+
+    broadcast(event, data) {
+        var that = this;
+        return new Promise(function (resolve, reject) {
+            if (that.connected) {
+                that.socket.emit(event, data, function (json) { resolve(json); });
+            }
+        });
+    };
+
+    /**
+     * 关闭远程消息传送
+     */
+    close() {
+        if (this.socket) {
+            this.socket.close();
+        }
+    };
 }
 
 let _socketClient = null;
 Plugin.install = function (Vue, options) {
     _socketClient = new RemoteClient(options);
-    Vue.socket = _socketClient;
-    window.socket = _socketClient;
+    Vue.socketClient = _socketClient;
+    window.socketClient = _socketClient;
     Object.defineProperties(Vue.prototype, {
-        socket: {
+        socketClient: {
             get() {
                 return _socketClient;
             }
         },
-        $socket: {
+        $socketClient: {
             get() {
                 return _socketClient;
             }
