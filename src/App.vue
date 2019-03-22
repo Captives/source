@@ -4,7 +4,8 @@
     <DropDownList class="language" :list="list" @change="languageChange" :value="list[0]"></DropDownList>
     <div id="nav">
       <router-link to="/">Home</router-link>|
-      <router-link to="/about">About</router-link>
+      <router-link to="/about">About</router-link> |
+      <router-link to="/worker">Worker</router-link>
     </div>
     <router-view/>
   </div>
