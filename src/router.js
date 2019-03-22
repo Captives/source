@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
 import Worker from './views/Worker.vue'
+import ShareWorker from './views/ShareWorker.vue'
 
 Vue.use(Router)
 
@@ -16,6 +17,10 @@ export default new Router({
       path: '/worker',
       name: 'worker',
       component: Worker
+    }, {
+      path: '/shareworker',
+      name: 'shareworker',
+      component: ShareWorker
     },
     {
       path: '/about',
