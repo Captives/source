@@ -60,7 +60,7 @@ export default {
       if (this.form.name) {
         this.$emit("login", this.form.name, region);
       } else {
-        this.error = "用户名不能为空";
+        this.errorTip = "用户名不能为空";
       }
     },
     selectHandler() {
@@ -68,7 +68,7 @@ export default {
     },
     changeHandler() {
       if (this.form.name) {
-        this.error = "";
+        this.errorTip = "";
       }
     },
     exit() {}

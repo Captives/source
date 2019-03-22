@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -7,7 +8,22 @@ export default new Vuex.Store({
     connect: false
   },
   actions: {
-    
+    //连接成功
+    SOCKET_CONNECT: ({ commit }, data) => {
+      console.log('socket connected');
+    },
+    SOCKET_CONNECTED: ({ commit }, data) => {
+      console.log('socket connected');
+    },//断开
+    SOCKET_ENTERREJECT: ({ commit }, data) => {
+      console.log('socket enterReject');
+    },//断开
+    SOCKET_DISCONNECT: ({ commit }, data) => {
+      console.log('socket disconnect');
+    },//登入成功
+    SOCKET_SUCCESS: ({ commit }, data) => {
+      console.log('SUCCESS');
+    }
   },
   mutations: {
     //连接成功

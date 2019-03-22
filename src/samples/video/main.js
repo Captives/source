@@ -10,18 +10,25 @@ import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(ui);
 
 //页面的全局组件
-import pages from './web/main'
+import pages from './views/main'
 Vue.use(pages);
 
 Vue.config.productionTip = false
 
-import SocketClient from './plugin/SocketClient';
-// import SocketClient from './plugin/SocketIO';
-Vue.use(SocketClient, {
-  url: 'ws://' + window.location.hostname + ':3000',
-  transports: ['websocket'],
-  path: "/cluster"
-});
+//Socket.io消息通讯
+import VueSocketIO from 'vue-socket.io'
+import SocketIO from 'socket.io-client'
+// Vue.use(VueSocketIO, SocketIO('ws://' + window.location.hostname + ':3000', { transports: ['websocket'], path: '/cluster' }), store);
+Vue.use(new VueSocketIO({
+  debug: true,
+  connection: SocketIO('ws://' + window.location.hostname + ':3000', { transports: ['websocket'], path: '/cluster' }),
+  vuex: {
+    store,
+    actionPrefix: "SOCKET_",
+    mutationPrefix: "SOCKET_"
+  }
+})
+);
 
 window.vue = new Vue({
   router,

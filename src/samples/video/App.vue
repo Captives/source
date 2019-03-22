@@ -10,7 +10,7 @@
 </template>
 <script>
 import DropDownList from "@/components/DropDownList.vue";
-import LoginPage from "./web/LoginPage.vue";
+import LoginPage from "./views/LoginPage.vue";
 export default {
   name: "App",
   components: {

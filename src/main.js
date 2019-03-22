@@ -6,6 +6,14 @@ import i18n from './i18n'
 
 Vue.config.productionTip = false
 
+import SocketClient from './plugin/SocketClient';
+
+Vue.use(SocketClient, {
+  url: 'ws://' + window.location.hostname + ':3000',
+  transports: ['websocket'],
+  path: "/cluster"
+});
+
 new Vue({
   router,
   store,
