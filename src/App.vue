@@ -6,7 +6,8 @@
       <router-link to="/">Home</router-link>|
       <router-link to="/about">About</router-link> |
       <router-link to="/worker">Worker</router-link> |
-        <router-link to="/shareworker">ShareWorker</router-link>
+        <router-link to="/shareworker">ShareWorker</router-link> |
+         <!-- <router-link to="/socketshareworker">Socket ShareWorker</router-link> -->
     </div>
     <router-view/>
   </div>

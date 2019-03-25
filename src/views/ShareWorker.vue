@@ -26,7 +26,6 @@ export default {
     errorHandler(err) {},
     sendText() {
       if (this.inputText) {
-        // this.worker.port.postMessage("get");
         this.worker.port.postMessage(this.inputText);
         this.inputText = "";
       }
@@ -37,10 +36,6 @@ export default {
     this.worker.port.onmessage = this.messageHandler;
     this.worker.port.onerror = this.errorHandler;
     this.worker.port.start();
-
-    // 获取和发送消息都是调用postMessage方法，我这里约定的是传递'get'表示获取数据。
-    // this.worker.port.postMessage("get");
-    this.worker.port.postMessage("发送信息给worker");
   }
 };
 </script>
