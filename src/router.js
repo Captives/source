@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import Home from './views/Home.vue'
 import Worker from './views/Worker.vue'
 import ShareWorker from './views/ShareWorker.vue'
-
+import SocketShareWorker from './views/SocketShareWorker.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -21,6 +21,10 @@ export default new Router({
       path: '/shareworker',
       name: 'shareworker',
       component: ShareWorker
+    }, {
+      path: '/socketshareworker',
+      name: 'socketshareworker',
+      component: SocketShareWorker
     },
     {
       path: '/about',

@@ -1,5 +1,6 @@
 const SocketCluster = require('./socket/SocketCluster');
 const TravelSocket = require('./socket/TravelSocket');
+const SharedWorkerSocket = require('./socket/SharedWorkerSocket');
 const httpServer = require('http').createServer();
 
 const log4js = require('./config/Logger');
@@ -14,5 +15,6 @@ httpServer.on('request', Router.handler)
     console.log('服务启动完成', httpServer.address().port);
     var socket = new TravelSocket(httpServer, '/trave');
     var cluster = new SocketCluster(httpServer, '/cluster');
+    var sws = new SharedWorkerSocket(httpServer, '/sws');
   });
 

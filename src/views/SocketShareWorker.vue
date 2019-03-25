@@ -10,7 +10,7 @@
 
 <script>
 export default {
-  name: "ShareWorker",
+  name: "SocketShareWorker",
   components: {},
   data() {
     return {
@@ -26,16 +26,20 @@ export default {
     errorHandler(err) {},
     sendText() {
       if (this.inputText) {
-        this.worker.port.postMessage(this.inputText);
+        this.worker.port.postMessage({ event: "chat", value: this.inputText });
         this.inputText = "";
       }
     }
   },
   mounted() {
-    this.worker = new SharedWorker("SharedWorker.js");
+    this.worker = new SharedWorker("SocketSharedWorker.js");
     this.worker.port.onmessage = this.messageHandler;
     this.worker.port.onerror = this.errorHandler;
     this.worker.port.start();
+    this.worker.port.postMessage({
+      event: "join",
+      uri: "ws://local.uuabc.com:3000/"
+    });
   }
 };
 </script>
@@ -44,6 +48,11 @@ export default {
   input {
     width: 100px;
     margin: 0 10px;
+  }
+
+  ul li {
+    text-align: left;
+    padding: 10px 0;
   }
 }
 </style>

@@ -4,10 +4,10 @@
     <DropDownList class="language" :list="list" @change="languageChange" :value="list[0]"></DropDownList>
     <div id="nav">
       <router-link to="/">Home</router-link>|
-      <router-link to="/about">About</router-link> |
-      <router-link to="/worker">Worker</router-link> |
-        <router-link to="/shareworker">ShareWorker</router-link> |
-         <!-- <router-link to="/socketshareworker">Socket ShareWorker</router-link> -->
+      <router-link to="/about">About</router-link>|
+      <router-link to="/worker">Worker</router-link>|
+      <router-link to="/shareworker">ShareWorker</router-link>|
+      <router-link to="/socketshareworker">Socket ShareWorker</router-link>
     </div>
     <router-view/>
   </div>
@@ -60,10 +60,7 @@ export default {
   a {
     font-weight: bold;
     color: #2c3e50;
-
-    .router-link-exact-active {
-      color: #42b983;
-    }
+    padding: 5px;
   }
 }
 </style>
