@@ -63,14 +63,6 @@ function replaceConsole(logger, name) {
       var line = stackInfo['line'];
 
       var arr = Array.prototype.slice.call(arguments);
-      arr.push('\033[0m');
-      if (['[WARN]', '[ERROR]'].indexOf(level) == -1) {
-        arr.unshift('\033[0;' + code + 'm');
-      } else {
-        arr.unshift('\033[1;' + code + 'm');
-      }
-
-      arr.unshift('\033[0;32m');
       if (this.includeMethod) {
         arr.unshift(method);//方法
       }
@@ -88,7 +80,6 @@ function replaceConsole(logger, name) {
         arr.unshift('[' + new Date().toLocaleString() + ']');//日志级别
       }
 
-      arr.unshift('\033[0;32m');
       var text = arr.join(" ");
       console.log(text);
     }

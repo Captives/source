@@ -1,15 +1,15 @@
 var querystring = require('querystring');
 var ipSearch = require('../resource/IPSearch');
 var formatTime = require('../resource/utils').formatTime;
-
+var querystring = require('querystring');
 var log4js = require('../config/Logger');
 var console = log4js.getLogger('search');
 function RouteHandler() {
 
 }
 
-RouteHandler.prototype.search = function (req, res) {
-  var data = req.method == "GET" ? req.query : req.body;
+RouteHandler.prototype.search = function (req, res, data) {
+  var data = req.method == "GET" ? querystring.parse(data.query) : req.body;
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "GET");
   res.setHeader("Access-Control-Allow-Headers", "x-requested-with,content-type");

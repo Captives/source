@@ -38,7 +38,6 @@ Router.prototype.handler = function (req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "GET");
   res.setHeader("Access-Control-Allow-Headers", "x-requested-with,content-type");
-
   if (req.method == "POST") {
     Router.parsePostBody(req, function (data) {
       console.log('POST', data);
@@ -63,7 +62,7 @@ Router.prototype.handler = function (req, res) {
         RouteHandler.startup(req, res);
         break;
       case '/search':
-        RouteHandler.search(item.query, res);
+        RouteHandler.search(req, res, item);
         break;
       default:
         RouteHandler.notFound(req, res);
@@ -75,3 +74,4 @@ Router.prototype.handler = function (req, res) {
 };
 
 module.exports = new Router();
+
