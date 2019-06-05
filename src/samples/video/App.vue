@@ -1,39 +1,38 @@
 <template>
   <div class="wrapper">
-    <span class="srvinfo" v-if="!this.$store.state.connect">
-      请先连接服务器 {{show ? 'true' : 'false'}}- {{this.$store.state.connect}}
-      <DropDownList class="language" :list="list" @change="languageChange" :value="list[0]"></DropDownList>
-    </span>
-    <router-view v-if="this.$store.state.connect" v-show="login" :user="user" :list="roomList"/>
-    <login v-if="this.$store.state.connect" v-show="!login" :error="error" @login="loginHandler"></login>
+    <span class="srvinfo" v-if="!show">请先连接服务器 {{show ? 'true' : 'false'}} - {{show}}</span>
+
+    <template v-if="show">
+      <HomePage v-show="login" :user="user" :list="roomList"></HomePage>
+      <LoginPage v-show="!login" :error="error" @login="loginHandler"></LoginPage>
+    </template>
+  </div>
+</template>
+
   </div>
 </template>
 <script>
-import DropDownList from "@/components/DropDownList.vue";
+import { mapState, mapActions } from "vuex";
+
+import HomePage from "./views/HomePage.vue";
 import LoginPage from "./views/LoginPage.vue";
 export default {
   name: "App",
   components: {
-    DropDownList,
-    login: LoginPage
+    HomePage,
+    LoginPage
   },
   data() {
     return {
-      error: "",
-      login: false,
-      user: {},
-      list: [
-        { label: "中文", locale: "zh_CN" },
-        { label: "English", locale: "en_US" }
-      ],
-      roomList: []
+      error: ""
     };
   },
-  computed: {
-    show() {
-      return this.$store.state.connect;
-    }
-  },
+  computed: mapState({
+    show: "connect",
+    login: "login",
+    roomList: "roomList",
+    user: "user"
+  }),
   methods: {
     languageChange(item) {
       this.$i18n.locale = item.locale;
@@ -50,7 +49,6 @@ export default {
           localStorage.setItem("token", res.data.info);
           that.$socket.emit("join", data.id, res.data.info);
         } else {
-          that.login = false;
           that.error = res.data.info;
           console.error("ERROR", res.data.info);
         }
@@ -59,27 +57,6 @@ export default {
   },
   mounted() {
     var that = this;
-    if (this.$socket) {
-      this.$socket.on("connect", function() {
-        that.login = true;
-        console.log('socket connected');
-      });
-
-      this.$socket.on("connected", function(data) {
-        that.user = data;
-        that.login = true;
-        console.log("connected", that.user);
-      });
-
-      this.$socket.on("enterReject", function(data) {
-        console.log("enterReject", data);
-      });
-
-      this.$socket.on("success", function(data) {
-        that.roomList = data;
-      });
-    }
-
     var localData = {
       td: localStorage.getItem("td") || null,
       token: localStorage.getItem("token") || null
@@ -90,7 +67,6 @@ export default {
       if (res.data.success) {
         that.$socket.emit("join", localData.td, localData.token);
       } else {
-        that.login = false;
         that.error = res.data.info;
         console.warn("ERROR", res.data.info);
       }

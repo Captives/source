@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import App from './App.vue'
-import router from './router'
 import store from './store/index'
 import i18n from './i18n'
 
@@ -24,14 +23,12 @@ Vue.use(new VueSocketIO({
   connection: SocketIO('ws://' + window.location.hostname + ':3000', { transports: ['websocket'], path: '/cluster' }),
   vuex: {
     store,
-    actionPrefix: "SOCKET_",
-    mutationPrefix: "SOCKET_"
+    actionPrefix: "socket_",
+    mutationPrefix: "socket_"
   }
-})
-);
+}));
 
 window.vue = new Vue({
-  router,
   store,
   i18n,
   render: h => h(App)

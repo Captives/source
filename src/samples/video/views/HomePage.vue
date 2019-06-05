@@ -6,14 +6,14 @@
         <el-row :gutter="24">
           <el-col :span="22">你好{{userInfo.userName}}, 欢迎来到{{userInfo.name}}</el-col>
           <el-col :span="2">
-            <el-dropdown @command="dropchangeHandler">
-              <span class="el-dropdown-link">下拉菜单
+            <el-dropdown trigger="click">
+              <span class="el-dropdown-link">
+                个人信息
                 <i class="el-icon-arrow-down el-icon--right"></i>
               </span>
               <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item @command="dropchangeHandler">个人信息</el-dropdown-item>
-                <el-dropdown-item>更改区域</el-dropdown-item>
-                <el-dropdown-item divided>退出聊天</el-dropdown-item>
+                <el-dropdown-item :command="changeRegion">更改区域</el-dropdown-item>
+                <el-dropdown-item :command="exit" divided>退出聊天</el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
           </el-col>
@@ -79,46 +79,24 @@
 </template>
 
 <script>
+import { mapState, mapActions } from "vuex";
 export default {
   name: "HomePage",
   props: ["user", "list"],
   data() {
     return {
-      chatList: [],
       input: "",
       select: ""
     };
   },
-  computed: {
+  computed: mapState({
     userInfo() {
       return this.user || { region: {} };
-    }
-  },
-  mounted() {
-    var that = this;
-    this.$socket.on("userEntry", function(data) {
-      that.list.push({
-        uuid: data.uuid,
-        userName: data.userName,
-        name: data.name
-      });
-    });
-    this.$socket.on("userLeave", function(data) {
-      for (var i = 0; i < that.list.length; i++) {
-        if (that.list[i].uuid === data.uuid) {
-          that.list.splice(i, 1);
-        }
-        if (data.uuid == that.select) {
-          that.select = "";
-        }
-      }
-    });
-
-    this.$socket.on("chat", function(data) {
-      that.chatList.push(data);
-    });
-  },
-  methods: {
+    },
+    chatList: "chatList"
+  }),
+  methods: mapActions({
+    addChat: "socket_chat",
     isShow(item) {
       return item.uuid == this.userInfo.uuid;
     },
@@ -127,7 +105,7 @@ export default {
     },
     textSendHandler() {
       if (this.input) {
-        this.chatList.push({ user: this.userInfo, text: this.input });
+        this.addChat({ user: this.userInfo, text: this.input });
         this.$socket.emit("chat", this.input, this.select);
         this.input = "";
       } else {
@@ -144,10 +122,13 @@ export default {
     sendToUser(item) {
       this.select = item ? item.uuid : "";
     },
-    dropchangeHandler(text) {
-      console.log(text);
+    changeRegion(command) {
+      console.log("select ", command);
+    },
+    exit(command) {
+      this.$socket.close();
     }
-  }
+  })
 };
 </script>
 

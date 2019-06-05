@@ -5,48 +5,64 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    connect: false
-  },
-  actions: {
-    //连接成功
-    SOCKET_CONNECT: ({ commit }, data) => {
-      console.log('socket connected');
-    },
-    SOCKET_CONNECTED: ({ commit }, data) => {
-      console.log('socket connected');
-    },//断开
-    SOCKET_ENTERREJECT: ({ commit }, data) => {
-      console.log('socket enterReject');
-    },//断开
-    SOCKET_DISCONNECT: ({ commit }, data) => {
-      console.log('socket disconnect');
-    },//登入成功
-    SOCKET_SUCCESS: ({ commit }, data) => {
-      console.log('SUCCESS');
-    }
+    connect: false,
+    login: false,
+    user: [],
+    roomList: [],
+    chatList: []
   },
   mutations: {
     //连接成功
-    SOCKET_CONNECT: (state, status) => {
-      console.log('socket connected', state, status);
-      state.connect = true;
-    },
-    SOCKET_CONNECTED: (state, status) => {
-      console.log('socket connected', state, status);
+    socket_connect(state) {
       state.connect = true;
     },//断开
-    SOCKET_ENTERREJECT: (state, status) => {
-      console.log('socket enterReject', state, status);
-      state.connect = true;
-    },//断开
-    SOCKET_DISCONNECT: (state, status) => {
-      console.log('socket disconnect', status);
+    socket_disconnect(state, status) {
       state.connect = false;
-    },//登入成功
-    SOCKET_SUCCESS: (state, data) => {
-      state.user = data[0];
-      console.log('SUCCESS', state.message);
+    },
+    connected(state, data) {
+      state.login = true;
+      state.user = data;
+    },
+    success: (state, data) => {
+      state.roomList = data;
+    },
+    userEntry(state, data) {
+      state.roomList.push({
+        uuid: data.uuid,
+        userName: data.userName,
+        name: data.name
+      });
+    },
+    userLeave(state, data) {
+      for (var i = 0; i < state.roomList.length; i++) {
+        if (state.roomList[i].uuid === data.uuid) {
+          state.roomList.splice(i, 1);
+        }
+      }
+    },
+    chat(state, data) {
+      state.chatList.push(data);
     }
+  },
+  actions: {
+    socket_enterReject(state, status) {
+      // console.log("ACTIONS # ", 'enterReject');
+    },
+    socket_connected({ commit }, data) {
+      commit("connected", data);
+    },
+    socket_success({ commit }, data) {
+      commit('success', data);
+    },
+    socket_userEntry({ commit }, data) {
+      commit('userEntry', data);
+    },
+    socket_userLeave({ commit }, data) {
+      commit('userLeave', data);
+    },
+    socket_chat({ commit }, data) {
+      commit('chat', data);
+    },
   },
   getters: { //getter方法集合,类似vue的computed计算方法
 
