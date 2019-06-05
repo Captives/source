@@ -16,6 +16,7 @@ export default {
   },
   connect: false,
   list: {},
+  cityData:{},
   chatList: [],
   message: ''
 }

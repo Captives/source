@@ -1,11 +1,11 @@
 export default {
-  changeCityAction(context, item){
+  changeCityAction(context, item) {
     context.commit('changeCity', item);
   },
-  sendMessage(context, item){
+  sendMessage(context, item) {
     context.commit('broadcast', item);
   },
-  clearMessage(context, item){
+  clearMessage(context, item) {
     context.commit('clearMessage', item);
   },
   socket_userMessage: (context, message) => {
@@ -15,5 +15,8 @@ export default {
     if (message.is_important) {
       context.dispatch('alertImportantMessage', message);
     }
+  },  
+  SOCKET_index({ commit }, data) {
+    commit('index', data);
   }
 }

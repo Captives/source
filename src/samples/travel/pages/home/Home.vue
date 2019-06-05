@@ -88,13 +88,11 @@ export default {
   },
   mounted() {
     this.city = this.$store.state.city;
-    this.getHomeInfo(this.city);
+    // this.getHomeInfo(this.city);
   },
   activated() {
-    if (
-      this.city !== this.$store.state.city &&
-      this.$store.state.connect == false
-    ) {
+  if ( this.city !== this.$store.state.city &&
+      this.$store.state.connect == false) {
       this.city = this.$store.state.city;
       this.getHomeInfo(this.city);
     }

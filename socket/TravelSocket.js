@@ -5,10 +5,12 @@ var io = require('socket.io');
 const log4js = require('./../config/Logger');
 const console = log4js.getLogger('TravelSocket');
 function TravelSocket(server, path) {
-  socketServer = io().listen(server, {path: path});
+  socketServer = io().listen(server, { path: path });
   socketServer.on('connection', function (socket) {
     console.log('new socket.id', socket.id);
-    socket.emit('success', {id: socket.id, ua: socket.handshake.headers['user-agent']});
+    
+    socket.emit('success', { id: socket.id, ua: socket.handshake.headers['user-agent'] });
+    socket.emit('city', require('../mock/data/city.json'));
 
     socket.on('broadcast', function (data) {
       socketServer.sockets.emit('broadcast', data);
@@ -30,16 +32,18 @@ TravelSocket.prototype.startTask = function () {
     return result;
   }
 
-  var data = require('../mock/data/index.json');
-  //定时推送
-  setInterval(function () {
-    socketServer.sockets.emit('index', {
+  let data = require('../mock/data/index.json');
+  let pushTask = () => {
+    socketServer.sockets.emit('list', {
       swiperlist: filter(data['swiperlist'], 3),
       likelist: filter(data['likelist'], 2),
       iconlist: filter(data['iconlist'], 10),
       hotlist: filter(data['hotlist'], 3),
       weeklist: filter(data['weeklist'], 2)
     });
-  }, 1000 * 60);
+  }
+  //定时推送
+  setInterval(pushTask, 1000 * 60);
+  pushTask();
 };
 module.exports = TravelSocket;

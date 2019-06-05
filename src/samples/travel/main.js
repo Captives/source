@@ -27,8 +27,8 @@ Vue.use(new VueSocketIO({
   debug: true,
   vuex: {
     store,
-    // actionPrefix: 'SOCKET_',
-    // mutationPrefix: 'SOCKET_'
+    actionPrefix: 'SOCKET_',
+    mutationPrefix: 'SOCKET_'
   },
   connection: SocketIO('ws://' + window.location.hostname + ':3000', options),
 }));
